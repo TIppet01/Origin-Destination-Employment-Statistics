@@ -12,6 +12,7 @@
   <div id="myContainer"></div>
 
   <script>
+  // Mapbox API key
   var key = 'pk.eyJ1Ijoid2lsbGdlYXJ5IiwiYSI6ImNpdW9wcmkxNjAxbDUydXQ0MzFwdmdvOWkifQ.9YIdQhYTOpRpocyFK-tBNA';
 
   // Initialize the map with MapboxGL as the basemap
@@ -25,32 +26,9 @@
     style: "mapbox://styles/mapbox/light-v9"
   }
 
-  var myMap;
-  var data;
-  var originLats = [];
-  var originLons = [];
-  var destLats = [];
-  var destLons = [];
-
-  // Preload csv file
-  function preload(){
-    data = loadTable("NYC_sample_10000.csv", 'csv', 'header');
-  }
 
   // Setup function runs once
   function setup(){
-
-    // Parse the data
-    for (let i=0; i<data.getRowCount(); i++){
-      let originLat = data.get(i, "origin_lat");
-      let originLon = data.get(i, "origin_lon");
-      let destLat = data.get(i, "dest_lat");
-      let destLon = data.get(i, "dest_lon");
-      originLats.push(originLat);
-      originLons.push(originLon);
-      destLats.push(destLat);
-      destLons.push(destLon);
-    }
 
     // Create a canvas
     canvas = createCanvas(windowWidth-20, windowHeight-20);
@@ -63,45 +41,10 @@
     myMap.overlay(canvas)
   }
 
-
-
   // Main draw function runs 60 fps
   function draw(){
-    drawLines();
-  }
 
-  function drawLines(){
-    clear();
-    for (let i=0; i<data.getRowCount(); i++){
-      originLat = originLats[i];
-      originLon = originLons[i];
-      destLat = destLats[i];
-      destLon = destLons[i];
-      let originPos = myMap.latLngToPixel(originLat, originLon);
-      let destPos = myMap.latLngToPixel(destLat, destLon);
-      let lineLength = dist(originPos.x, originPos.y, destPos.x, destPos.y);
-      let lineLen = map(lineLength, 0, 500, 0.2, 1);
-      from = color(0,0,139, 150);
-      to = color(225, 255, 0, 150);
-
-      let distance = dist(originPos.x, originPos.y, mouseX, mouseY);
-      if (distance < 10) {
-        stroke(128,128,128);
-        line(originPos.x, originPos.y, destPos.x, destPos.y);
-        //gradientLine(originPos.x, originPos.y, destPos.x, destPos.y, from, to);
-      }
-
-    }
-  }
-
-  function gradientLine(x1, y1, x2, y2, a, b) {
-    let deltaX = x2 - x1;
-    let deltaY = y2 - y1;
-    let tStep = 1.0 / dist(x1, y1, x2, y2);
-    for (let t= 0.0; t < 1.0; t += tStep) {
-      fill(lerpColor(a, b, t));
-       ellipse(x1+t*deltaX, y1+t*deltaY, 1, 1);
-    }
+    ellipse(mouseX, mouseY, 50, 50);
   }
 
   </script>
