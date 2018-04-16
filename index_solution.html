@@ -34,7 +34,7 @@
 
   // Preload csv file
   function preload(){
-    data = loadTable("NYC_sample_100000.csv", 'csv', 'header');
+    data = loadTable("NYC_sample_10000.csv", 'csv', 'header');
   }
 
   // Setup function runs once
@@ -86,9 +86,10 @@
 
       let distance = dist(originPos.x, originPos.y, mouseX, mouseY);
       if (distance < 10) {
-        stroke(128,128,128);
-        line(originPos.x, originPos.y, destPos.x, destPos.y);
-        //gradientLine(originPos.x, originPos.y, destPos.x, destPos.y, from, to);
+        //stroke(128,128,128);
+        //line(originPos.x, originPos.y, destPos.x, destPos.y);
+        noStroke();
+        gradientLine(originPos.x, originPos.y, destPos.x, destPos.y, from, to);
       }
 
     }
@@ -100,7 +101,7 @@
     let tStep = 1.0 / dist(x1, y1, x2, y2);
     for (let t= 0.0; t < 1.0; t += tStep) {
       fill(lerpColor(a, b, t));
-       ellipse(x1+t*deltaX, y1+t*deltaY, 1, 1);
+       ellipse(x1+t*deltaX, y1+t*deltaY, 2, 2);
     }
   }
 
