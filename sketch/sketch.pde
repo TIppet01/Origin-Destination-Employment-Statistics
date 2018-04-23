@@ -24,14 +24,15 @@ boolean noise = false;
 
 void setup() {
 
-  size(1000, 1000, P3D);
+  size(600, 600, P3D);
   map = new UnfoldingMap(this);
   Location nyc = new Location(40.700, -73.9);
   int zoom = 11;
   map.zoomAndPanTo(zoom, nyc);
   MapUtils.createDefaultEventDispatcher(this, map);
-  tripTable = loadTable("../NYC_sample_100000.csv", "header");
+  tripTable = loadTable("../NYC_sample_10000.csv", "header");
   println(str(tripTable.getRowCount()) + " records loaded...");
+  smooth();
 
   // load data
   for (TableRow row : tripTable.rows()){
